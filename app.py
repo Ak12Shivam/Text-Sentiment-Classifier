@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify, render_template
 from transformers import pipeline
-import pytesseract
 from PIL import Image
 import docx
 import PyPDF2
