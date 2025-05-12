@@ -1,0 +1,7 @@
+flask
+transformers
+torch
+pillow
+python-docx
+PyPDF2
+hf_xet
