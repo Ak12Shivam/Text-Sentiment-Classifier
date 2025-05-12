@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text & Sentiment Classifier</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-3xl space-y-6">
+    <h1 class="text-3xl font-bold text-center text-blue-600">AI Text & Sentiment Analyzer</h1>
+
+    <form id="uploadForm" enctype="multipart/form-data">
+      <div class="mb-4">
+        <textarea name="text" rows="5" class="w-full p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your text here..."></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <label for="file-upload" class="sr-only">Upload file</label>
+        <input type="file" id="file-upload" name="file" accept=".txt,.pdf,.doc,.docx,.jpg,.jpeg,.png" class="border p-2 rounded-xl" title="Upload a file for analysis" />
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition">Classify & Analyze</button>
+      </div>
+    </form>
+
+    <div id="result" class="mt-4 text-gray-700">
+      <h2 class="text-xl font-semibold">Result:</h2>
+      <div id="classification" class="mt-2"></div>
+      <div id="sentiment" class="mt-2"></div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const response = await fetch('/analyze', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+      document.getElementById('classification').innerText = "Classification: " + result.classification;
+      document.getElementById('sentiment').innerText = "Sentiment: " + result.sentiment;
+    };
+  </script>
+</body>
+</html>
